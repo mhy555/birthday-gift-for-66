@@ -16,5 +16,6 @@ export default {
   height: 100%;
   width: 100%;
   min-width: 1024px;
+  overflow: hidden;
 }
 </style>
