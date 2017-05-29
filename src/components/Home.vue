@@ -62,24 +62,16 @@
           - 一年很快又过去了，我们收拾了行李一起回了国，然后你去了法国，我留下来gap year，两情若是长久时，又岂在朝朝暮暮，像我们这种好朋友当然是要一辈子的呀。
         </div>
       </div>
-      <div class="title">N年后</div>
-      <div class="content">
-        <div class="paragraph">
-          - 你开着你的保时捷，我开着我的玛莎拉蒂，我们一起去我们的乡间大别墅度假。
-        </div>
-      </div>
     </div>
     <div class="slot photo">
-      <div class="photo-container">
-        <div class="pic-1">
-
-        </div>
-      </div>
+      <div class="last"><div class="arrow" @click="goPrePic"><</div></div>
+      <div class="pic-box" :class="picture"></div>
+      <div class="next"><div class="arrow" @click="goNextPic">></div></div>
     </div>
     <div class="slot mail">
       <div class="mail-container">
         <div class="write-mail">
-
+          写信功能，敬请期待。。。
         </div>
         <div class="mail-box">
 
@@ -93,13 +85,34 @@
 var slotNum = 4;
 export default {
   name: 'home',
+  computed: {
+    picture() {
+      return 'picture-' + this.pictureNum;
+    }
+  },
   data () {
     return {
       prevScroll: -1,
-      activeSlot: 0
+      activeSlot: 0,
+      pictureNum: 0,
+      pictureLength: 17
     }
   },
   methods: {
+    goPrePic() {
+      if (this.pictureNum === 0) {
+          this.pictureNum = this.pictureLength - 1;
+        } else {
+          this.pictureNum--;
+        }
+    },
+    goNextPic() {
+      if (this.pictureNum === this.pictureLength - 1) {
+        this.pictureNum = 0;
+      } else {
+        this.pictureNum++;
+      }
+    },
     hlMouseScroll(e) {
       e.preventDefault();
       if (e.deltaY < 0) {
@@ -155,6 +168,16 @@ export default {
   },
   mounted() {
     this.addScrollListener();
+    var self = this;
+    setTimeout(addPicNo, 5000)
+    function addPicNo() {
+      if (self.pictureNum !== self.pictureLength - 1) {
+        self.pictureNum++;
+      } else {
+        self.pictureNum = 0;
+      }
+      setTimeout(addPicNo, 5000)
+    }
   }
 }
 </script>
@@ -211,9 +234,118 @@ export default {
   }
   .slot.photo {
     background: #00ff33;
+    position: relative;
+    .last, .next {
+      position: absolute;
+      height: 100%;
+      width: 10%;
+      text-align: center;
+      cursor: pointer;
+    }
+    .last {
+      left: 0;
+    }
+    .next {
+      right: 0;
+    }
+    .arrow {
+      font-size: 32px;
+      color: white;
+      line-height: 1;
+      position: relative;
+      top: 50%;
+      margin-top: -16px;
+    }
+    .pic-box {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-left: -280px;
+      margin-top: -290px;
+      width: 560px;
+      height: 580px;
+      &.picture-0 {
+        background: url('../../assets/pic-0.jpg') no-repeat center;
+        background-size: contain;
+      }
+      &.picture-1 {
+        background: url('../../assets/pic-1.jpg') no-repeat center;
+        background-size: contain;
+      }
+      &.picture-2 {
+        background: url('../../assets/pic-2.jpg') no-repeat center;
+        background-size: contain;
+      }
+      &.picture-3 {
+        background: url('../../assets/pic-3.jpg') no-repeat center;
+        background-size: contain;
+      }
+      &.picture-4 {
+        background: url('../../assets/pic-4.jpg') no-repeat center;
+        background-size: contain;
+      }
+      &.picture-5 {
+        background: url('../../assets/pic-5.jpg') no-repeat center;
+        background-size: contain;
+      }
+      &.picture-6 {
+        background: url('../../assets/pic-6.jpg') no-repeat center;
+        background-size: contain;
+      }
+      &.picture-7 {
+        background: url('../../assets/pic-7.jpg') no-repeat center;
+        background-size: contain;
+      }
+      &.picture-8 {
+        background: url('../../assets/pic-8.jpg') no-repeat center;
+        background-size: contain;
+      }
+      &.picture-9 {
+        background: url('../../assets/pic-9.jpg') no-repeat center;
+        background-size: contain;
+      }
+      &.picture-10 {
+        background: url('../../assets/pic-10.jpg') no-repeat center;
+        background-size: contain;
+      }
+      &.picture-11 {
+        background: url('../../assets/pic-11.jpg') no-repeat center;
+        background-size: contain;
+      }
+      &.picture-12 {
+        background: url('../../assets/pic-12.jpg') no-repeat center;
+        background-size: contain;
+      }
+      &.picture-13 {
+        background: url('../../assets/pic-13.jpg') no-repeat center;
+        background-size: contain;
+      }
+      &.picture-14 {
+        background: url('../../assets/pic-14.jpg') no-repeat center;
+        background-size: contain;
+      }
+      &.picture-15 {
+        background: url('../../assets/pic-15.jpg') no-repeat center;
+        background-size: contain;
+      }
+      &.picture-16 {
+        background: url('../../assets/pic-16.jpg') no-repeat center;
+        background-size: contain;
+      }
+    }
   }
   .slot.mail {
     background: #00cc33;
+    position: relative;
+    .write-mail {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 30px;
+      color: #fff;
+      line-height: 1;
+    }
   }
 
   @keyframes bounceIn {
