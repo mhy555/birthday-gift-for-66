@@ -3,6 +3,9 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import Timeago from 'timeago.js'
+
+const timeago = new Timeago(null, 'zh_CN')
 
 Vue.config.productionTip = false
 
@@ -12,4 +15,8 @@ new Vue({
   router,
   template: '<App/>',
   components: { App }
+})
+
+Vue.filter('timeago', (str) => {
+  return timeago.format(new Date(str))
 })

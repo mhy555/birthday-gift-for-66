@@ -1,5 +1,8 @@
 <template>
   <div class="home" :class="'slot-active' + activeSlot" ref="home">
+    <div class="mail-box" @click="checkMail">
+      <div class="dot"></div>
+    </div>
     <div class="slot main">
       <div class="text-container">
         <div class="text">
@@ -9,9 +12,7 @@
           2017.6.7
         </div>
       </div>
-      <div class="arrow">
-
-      </div>
+      <div class="down-arrow"></div>
     </div>
     <div class="slot memory">
       <div class="title">大一</div>
@@ -62,19 +63,18 @@
           - 一年很快又过去了，我们收拾了行李一起回了国，然后你去了法国，我留下来gap year，两情若是长久时，又岂在朝朝暮暮，像我们这种好朋友当然是要一辈子的呀。
         </div>
       </div>
+      <div class="down-arrow"></div>
     </div>
     <div class="slot photo">
       <div class="last"><div class="arrow" @click="goPrePic"><</div></div>
       <div class="pic-box" :class="picture"></div>
       <div class="next"><div class="arrow" @click="goNextPic">></div></div>
+      <div class="down-arrow"></div>
     </div>
     <div class="slot mail">
       <div class="mail-container">
         <div class="write-mail">
           写信功能，敬请期待。。。
-        </div>
-        <div class="mail-box">
-
         </div>
       </div>
     </div>
@@ -83,6 +83,7 @@
 
 <script>
 var slotNum = 4;
+var timeout;
 export default {
   name: 'home',
   computed: {
@@ -100,18 +101,22 @@ export default {
   },
   methods: {
     goPrePic() {
+      clearTimeout(timeout);
       if (this.pictureNum === 0) {
-          this.pictureNum = this.pictureLength - 1;
-        } else {
-          this.pictureNum--;
-        }
+        this.pictureNum = this.pictureLength - 1;
+      } else {
+        this.pictureNum--;
+      }
+      timeout = setTimeout(this.addPicNo, 5000);
     },
     goNextPic() {
+      clearTimeout(timeout);
       if (this.pictureNum === this.pictureLength - 1) {
         this.pictureNum = 0;
       } else {
         this.pictureNum++;
       }
+      timeout = setTimeout(this.addPicNo, 5000);
     },
     hlMouseScroll(e) {
       e.preventDefault();
@@ -164,20 +169,24 @@ export default {
                 return transEndEventNames[name]
             }
         }
-    }
-  },
-  mounted() {
-    this.addScrollListener();
-    var self = this;
-    setTimeout(addPicNo, 5000)
-    function addPicNo() {
+    },
+    addPicNo() {
+      var self = this;
+      clearTimeout(timeout);
       if (self.pictureNum !== self.pictureLength - 1) {
         self.pictureNum++;
       } else {
         self.pictureNum = 0;
       }
-      setTimeout(addPicNo, 5000)
+      timeout = setTimeout(this.addPicNo, 5000);
+    },
+    checkMail() {
+      this.$router.push('mailList')
     }
+  },
+  mounted() {
+    this.addScrollListener();
+    timeout = setTimeout(this.addPicNo, 5000);
   }
 }
 </script>
@@ -190,9 +199,42 @@ export default {
   transition: transform 0.3s;
   transform: translateY(0);
   // overflow: scroll;
+  .mail-box {
+    position: absolute;
+    left: 20px;
+    top: 50px;
+    z-index: 999;
+    width: 83px;
+    height: 48px;
+    background: url('../../assets/mail.png') no-repeat center;
+    background-size: contain;
+    cursor: pointer;
+    .dot {
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 1000;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: red;
+    }
+  }
   .slot {
+    position: relative;
     height: 25%;
     width: 100%;
+    .down-arrow {
+      position: absolute;
+      bottom: 10px;
+      width: 40.875px;
+      height: 34.4375px;
+      left: 50%;
+      margin-left: -20.4375px;
+      background: url('../../assets/down-arrow.png') no-repeat center;
+      background-size: contain;
+      animation: slideInDown 1s infinite;
+    }
   }
   .slot.main {
     position: relative;
@@ -404,6 +446,20 @@ export default {
       0% {opacity: 0;}/*初始状态 透明度为0*/
       40% {opacity: 0;}/*过渡状态 透明度为0*/
       100% {opacity: 1;}/*结束状态 透明度为1*/
+  }
+  @keyframes slideInDown {
+    from {
+      transform: translate3d(0, -70%, 0);
+      visibility: visible;
+    }
+
+    to {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  .slideInDown {
+    animation-name: slideInDown;
   }
 
   .bounceIn {
