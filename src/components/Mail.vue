@@ -1,5 +1,7 @@
 <template lang="html">
   <div class="mail">
+    <div class="home" @click="goHome"></div>
+    <div class="back" @click="goList"></div>
     <article v-if="content" v-html="htmlFromMarkdown"></article>
   </div>
 </template>
@@ -27,6 +29,12 @@ export default {
       api.getDetail(this.$route.params.hash).then((res) => {
         this.content = res;
       })
+    },
+    goHome() {
+      this.$router.push('/home');
+    },
+    goList() {
+      this.$router.push('/mailList');
     }
   }
 }
@@ -38,6 +46,26 @@ export default {
   font-family: monospace;
   color: #282828;
   font-size: 16px;
+  .home {
+    width: 50px;
+    height: 50px;
+    background: url('../../assets/home.png') no-repeat center;
+    background-size: contain;
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    cursor: pointer;
+  }
+  .back {
+    width: 50px;
+    height: 50px;
+    background: url('../../assets/back.png') no-repeat center;
+    background-size: contain;
+    position: absolute;
+    top: 80px;
+    left: 30px;
+    cursor: pointer;
+  }
   h1 {
     font-size: 19px;
     padding: 10px 0;

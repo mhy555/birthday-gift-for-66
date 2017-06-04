@@ -1,5 +1,6 @@
 <template lang="html">
   <div class="list-view">
+    <div class="home" @click="goHome"></div>
     <div class="item-container" v-for="item in items">
       <router-link :to="'/mail/' + item.sha" :key="item.sha" class="item-title">
         {{ item.title }}
@@ -34,6 +35,9 @@ export default {
         console.log('list', list);
         this.items = list;
       })
+    },
+    goHome() {
+      this.$router.push('/home')
     }
   }
 }
@@ -41,6 +45,16 @@ export default {
 
 <style lang="less">
 .list-view {
+  .home {
+    width: 50px;
+    height: 50px;
+    background: url('../../assets/home.png') no-repeat center;
+    background-size: contain;
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    cursor: pointer;
+  }
   .item-container {
     padding: 30px 0 30px 40%;
     font-family: monospace;

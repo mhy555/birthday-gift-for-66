@@ -14,15 +14,22 @@ export default new Router({
       component: Home
     },
     {
+      path: '/home',
+      component: Home
+    },
+    {
       path: '/mail/:hash',
       name: 'Mail',
       component: Mail
-    }
-    ,
+    },
     {
       path: '/mailList',
       name: 'MailList',
       component: MailList
+    },
+    {
+      path: '*',
+      redirect: '/'
     }
   ]
 })

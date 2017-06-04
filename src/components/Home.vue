@@ -1,7 +1,7 @@
 <template>
   <div class="home" :class="'slot-active' + activeSlot" ref="home">
     <div class="mail-box" @click="checkMail">
-      <div class="dot"></div>
+      <div class="dot" :class="{read: read}"></div>
     </div>
     <div class="point-container">
       <div class="point-arrow"></div>
@@ -102,7 +102,8 @@ export default {
       prevScroll: -1,
       activeSlot: 0,
       pictureNum: 0,
-      pictureLength: 17
+      pictureLength: 17,
+      read: false
     }
   },
   methods: {
@@ -163,6 +164,13 @@ export default {
       }//W3C
       window.onmousewheel = document.onmousewheel = this.hlMouseScroll;//IE/Opera/Chrome
     },
+    removeScrollListener() {
+      console.log('removeScrollListener');
+      if (document.addEventListener) {
+        document.removeEventListener('DOMMouseScroll', this.hlMouseScroll, false);
+      }//W3C
+      window.onmousewheel = document.onmousewheel = null;//IE/Opera/Chrome
+    },
     transitionEnd(){
         var transEndEventNames = {
           WebkitTransition : 'webkitTransitionEnd',
@@ -187,12 +195,20 @@ export default {
       timeout = setTimeout(this.addPicNo, 5000);
     },
     checkMail() {
+      this.read = true;
       this.$router.push('mailList')
     }
   },
   mounted() {
+    console.log('mounted');
     this.addScrollListener();
     timeout = setTimeout(this.addPicNo, 5000);
+  },
+  deactivated() {
+    this.removeScrollListener();
+  },
+  activated() {
+    this.addScrollListener();
   }
 }
 </script>
@@ -224,6 +240,9 @@ export default {
       height: 10px;
       border-radius: 50%;
       background: red;
+      &.read {
+        display: none;
+      }
     }
   }
   .point-container {
