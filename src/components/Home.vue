@@ -6,7 +6,7 @@
     <div class="point-container">
       <div class="point-arrow"></div>
       <div class="text">
-        你要的绿色
+        你要的青春的绿色
       </div>
     </div>
     <div class="slot main">
@@ -239,7 +239,7 @@ export default {
     }
     .text {
       font-family: "PMingLiU","LiSu","Arial","Microsoft YaHei","黑体","宋体",sans-serif;
-      margin-left: -30px;
+      margin-left: -50px;
       margin-top: 10px;
     }
   }
