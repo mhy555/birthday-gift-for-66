@@ -3,6 +3,12 @@
     <div class="mail-box" @click="checkMail">
       <div class="dot"></div>
     </div>
+    <div class="point-container">
+      <div class="point-arrow"></div>
+      <div class="text">
+        你要的绿色
+      </div>
+    </div>
     <div class="slot main">
       <div class="text-container">
         <div class="text">
@@ -218,6 +224,23 @@ export default {
       height: 10px;
       border-radius: 50%;
       background: red;
+    }
+  }
+  .point-container {
+    position: absolute;
+    top: 500px;
+    left: 80px;
+    z-index: 999;
+    .point-arrow {
+      width: 100px;
+      height: 30px;
+      background: url('../../assets/point-arrow.png') no-repeat center;
+      background-size: contain;
+    }
+    .text {
+      font-family: "PMingLiU","LiSu","Arial","Microsoft YaHei","黑体","宋体",sans-serif;
+      margin-left: -30px;
+      margin-top: 10px;
     }
   }
   .slot {
