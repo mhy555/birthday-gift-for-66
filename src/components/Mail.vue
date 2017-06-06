@@ -42,7 +42,7 @@ export default {
 
 <style lang="less">
 .mail {
-  padding: 0 15% 30px 16%;
+  padding: 50px 15% 30px 16%;
   font-family: monospace;
   color: #282828;
   font-size: 16px;
